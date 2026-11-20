@@ -1,25 +1,25 @@
 # Hello World Quiz
 
-Ich habe ein kleines Quiz mit PHP gemacht. Das Programm fragt, wie «Hallo Welt» auf Englisch heisst. Wenn die Antwort falsch ist, kommt die Frage nochmals. Bei der richtigen Antwort ist das Quiz fertig.
-## Starten
+I’ve created a little quiz using PHP. The programme asks what ‘Hello World’ is called in English. If the answer is wrong, the question is asked again. If the answer is correct, the quiz is finished.
+## Getting started
 
-Speicherte den Code als `QUIZ_projekt.php`. Dann kannst man das Programm im Terminal starten:
+Save the code as `QUIZ_projekt.php`. You can then run the programme in the terminal:
 
 ```bash
 php projekt.php
 ```
 
-Die richtige Antwort ist `Hello World`.
+The correct answer is `Hello World`.
 
 
-## Was im Programm vorkommt
+## What’s in the programme
 
-- `question()` stellt die Frage.
-- `correct()` prüft die Antwort und gibt `true` oder `false` zurück.
-- Die `do ... while`-Schleife fragt so lange, bis die Antwort stimmt.
-- Mit `if ... else` wird entschieden, ob die Antwort richtig ist.
-- `strtolower()` macht den Text für die Ausgabe klein.
+- `question()` asks the question.
+- `correct()` checks the answer and returns `true` or `false`.
+- The `do ... while` loop keeps asking until the answer is correct.
+- `if ... else` is used to determine whether the answer is correct.
+- `strtolower()` converts the text to lower case for output.
 
-## Noch zu beachten
+## Further notes
 
-Im Moment muss man genau `Hello World` eingeben. Gross- und Kleinschreibung wird bei der Prüfung NICHT ignoriert.
+At the moment, you must enter exactly `Hello World`. The check is NOT case-insensitive.

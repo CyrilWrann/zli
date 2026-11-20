@@ -1,4 +1,10 @@
 <?php
+
+//author @cyril
+//version finished
+//copyright @CyrilWrann
+
+
 //poses the question
 function question()
 {
