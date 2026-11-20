@@ -1,0 +1,164 @@
+# Lerndokumentation Docker
+
+**Name:** [Name]
+**Klasse:** [Klasse]
+**Fach:** [Fach]
+**Datum:** [Datum]
+
+---
+
+## 1. Einleitung
+
+In dieser Dokumentation beschreibe ich was ich über Docker gelernt habe. Docker ist ein Programm mit dem man Anwendungen in sogenanten Containern starten kann. Das ist ser praktisch weil die Anwendung dann auf jedem Computer gleich läuft. Man mus nicht mer alles einzeln installieren und es git weniger Probleme mit verschidenen Versionen.
+
+Mein Ziel war es zu verstehen wie man ein Projekt einrichtet, ein Docker-Image erstelt und die Anwendung mit Docker und Docker Compose startet.
+
+## 2. Voraussetzungen
+
+Damit ich mit Docker arbeiten konde, hate ich folgendes nötig:
+
+- Docker Desktop (oder Docker Engine)
+- Git
+- einen Editor, zum Beispiel Visual Studio Code
+- einen GitHub-Account
+- ein Terminal (Kommandozeile)
+
+Am Anfang habe ich mit `docker --version` kontroliert ob Docker richtig installiert ist.
+
+```bash
+docker --version
+git --version
+```
+
+> **Screenshot 1:** Ausgabe von `docker --version` [Screenshot einfügen]
+
+## 3. Repository klonen und Projekt einrichten
+
+Zuerst mus man das Projekt von GitHub auf den eigenen Computer holen. Das nent man klonen. Danach wechselt man in den Projektordner.
+
+```bash
+git clone https://github.com/[benutzer]/[projekt].git
+cd [projekt]
+```
+
+> **Screenshot 2:** Geklontes Projekt im Editor [Screenshot einfügen]
+
+## 4. Installation der Pakete
+
+Bevor die Anwendung lokal läuft, müsen die Pakete (Abhängigkeiten) installiert werden. Bei einem Node.js-Projekt geht das so:
+
+```bash
+npm install
+```
+
+Wenn ein anderes Projekt verwendet wird, ist der Befehl ein anderer, zum Beispiel `pip install -r requirements.txt` bei Python.
+
+## 5. Anwendung lokal starten
+
+Als ich die Pakete installiert hate, konde ich die Anwendung ersteinmal ohne Docker starten. So sehe ich ob alles funktioniert.
+
+```bash
+npm start
+```
+
+Danach kann man im Browser die Adresse `http://localhost:3000` öffnen. Wenn die Seite erscheint, funktioniert die Anwendung.
+
+> **Screenshot 3:** Anwendung im Browser [Screenshot einfügen]
+
+## 6. Docker-Image erstellen
+
+Ein Image ist wie eine Vorlage für den Container. Es wird mit einer Datei gebaut die **Dockerfile** heist. In dieser Datei steht Schritt für Schritt was Docker machen soll.
+
+```dockerfile
+FROM node:20
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+EXPOSE 3000
+CMD ["npm", "start"]
+```
+
+Was die Zeilen bedeuten:
+
+1. `FROM` legt fest welches Basis-Image verwendet wird.
+2. `WORKDIR` ist der Arbeitsordner im Container.
+3. `COPY` kopiert Dateien vom Computer in den Container.
+4. `RUN` führt einen Befehl beim Bauen aus.
+5. `EXPOSE` sagt welcher Port verwendet wird.
+6. `CMD` ist der Befel der beim Start ausgeführt wird.
+
+Dann wird das Image gebaut:
+
+```bash
+docker build -t meine-app .
+```
+
+Mit diesem Befehl kann man kontrollieren ob das Image da ist:
+
+```bash
+docker images
+```
+
+> **Screenshot 4:** Ausgabe von `docker build` und `docker images` [Screenshot einfügen]
+
+## 7. Anwendung mit Docker starten
+
+Jetzt kann aus dem Image ein Container gestartet werden. Mit `-p` wird ein Port vom Computer mit dem Port im Container verbunden.
+
+```bash
+docker run -d -p 3000:3000 --name meine-app-container meine-app
+```
+
+Ob der Container läuft sieht man mit:
+
+```bash
+docker ps
+```
+
+Danach ist die Anwendung wieder im Browser unter `http://localhost:3000` erreichbar.
+
+> **Screenshot 5:** Laufender Container mit `docker ps` [Screenshot einfügen]
+
+## 8. Anwendung mit Docker Compose starten
+
+Wenn man mer als einen Container hat, zum Beispiel eine App und eine Datenbank, ist Docker Compose ser hilfreich. Man schreibt alles in eine Datei die **docker-compose.yml** heist und startet dann alles mit einem einzigen Befel.
+
+```yaml
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_PASSWORD: example
+```
+
+Starten:
+
+```bash
+docker compose up -d
+```
+
+> **Screenshot 6:** Ausgabe von `docker compose up -d` [Screenshot einfügen]
+
+## 9. Anwendung stoppen
+
+Wenn man fertig ist, sollte man die Container wieder stoppen. Sonst laufen sie im Hintergrund weiter und brauchen Speicher.
+
+```bash
+# einzelnen Container stoppen und löschen
+docker stop meine-app-container
+docker rm meine-app-container
+
+# alles von Docker Compose stoppen
+docker compose down
+```
+
+## 10. Zusammenfassung / Fazit
+
+Ich habe gelernt das Docker das Arbeiten viel einfacher macht, weil die Anwendung in jeder Umgebung gleich startet. Am Anfang war es für mich schwirig alle Befele zu verstehen, aber mit den Screenshots und dem Ausprobieren wurde es besser. Besonders gut hat mir Docker Compose gefalen, weil man mit nur einem Befel alles starten kann.
+
+Nächstes Mal möchte ich noch mer über Volumes und Netzwerke in Docker lernen
