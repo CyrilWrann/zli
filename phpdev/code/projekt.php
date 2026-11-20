@@ -1,4 +1,5 @@
 <?php
+
 function question()
 {
     return readline("Hallo Welt in english? ");
